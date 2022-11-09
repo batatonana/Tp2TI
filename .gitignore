@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+/Documentacao
+/TP2 - Deflate.pdf
+FAQ.txt.gz
