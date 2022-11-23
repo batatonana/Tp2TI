@@ -174,9 +174,12 @@ class GZIP:
 			lenghts = dict(sorted(lenghts.items()))
 			print(lenghts)
 
-	
-			
-																																								
+			for i in range(max(lenghts.values())+1):
+				codes = []
+				for j in lenghts.keys():
+					if(i != 0 and lenghts[j] == i):
+						codes += [j]
+				print(codes)																		
 			# update number of blocks read
 			numBlocks += 1
 		
