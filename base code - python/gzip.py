@@ -1,6 +1,6 @@
 import sys
 from huffmantree import HuffmanTree
-
+import functions
 
 class GZIPHeader:
 	''' class for reading and storing GZIP header fields '''
@@ -156,7 +156,8 @@ class GZIP:
 				print('Error: Block %d not coded with Huffman Dynamic coding' % (numBlocks+1))
 				return
 							
-			#--- STUDENTS --- ADD CODE HERE
+		#--- STUDENTS --- ADD CODE HERE
+		#Reads the block Hlit Hdist and Hclen
 			HLIT = self.readBits(5) + 257
 			HDIST = self.readBits(5) + 1
 			HCLEN = self.readBits(4) + 4
@@ -164,6 +165,7 @@ class GZIP:
 			print("HDIST: ", HDIST)
 			print("HCLEN: ", HCLEN)
 			
+		#Gets the length for each symbol
 			symbols = [16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15]
 			lenghts = {}
 			for i in range(len(symbols)):
@@ -172,18 +174,14 @@ class GZIP:
 				else:
 					lenghts[symbols[i]] = 0
 			lenghts = dict(sorted(lenghts.items()))
-			print(lenghts)
+			print("lengths: ", lenghts)
 
-			for i in range(max(lenghts.values())+1):
-				codes = []
-				for j in lenghts.keys():
-					if(i != 0 and lenghts[j] == i):
-						codes += [j]
-				print(codes)																		
+		#Generates de binary code for each symbol
+			print(functions.huffmanCode(lenghts))
+
 			# update number of blocks read
 			numBlocks += 1
 		
-
 		
 		# close file			
 		
