@@ -183,7 +183,9 @@ class GZIP:
 			HCLEN_tree = HuffmanTree()
 			for i in codes.keys():HCLEN_tree.addNode(codes[i], i)
 		#Exercice 4: Reading HLit
-		functions.search_tree_by_bit(self, HCLEN_tree, HLIT)
+		HLIT_lenghts = functions.search_tree_by_bit(self, HCLEN_tree, HLIT)
+		#Exercice 4: Creating the codes
+		print("\nHLIT_lenghts: ",functions.huffmanCode(HLIT_lenghts)) 
 
 		
 		
