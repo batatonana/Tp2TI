@@ -174,17 +174,29 @@ class GZIP:
 				else:
 					lenghts[symbols[i]] = 0
 			lenghts = dict(sorted(lenghts.items()))
-			print("lengths: ", lenghts)
-
+			print("HCLEN_Lengths: ", lenghts)
+		
 		#Generates de binary code for each symbol
-			print(functions.huffmanCode(lenghts))
+			codes = functions.huffmanCode(lenghts)
+			print("Codes: ", codes)
+		#Creates a tree for the huffman codes
+			HCLEN_tree = HuffmanTree()
+			for i in codes.keys():HCLEN_tree.addNode(codes[i], i)
+		#Exercice 4: Reading HLit
+		functions.search_tree_by_bit(self, HCLEN_tree, HLIT)
 
-			# update number of blocks read
-			numBlocks += 1
 		
 		
-		# close file			
 		
+		
+		
+		
+		
+		
+		
+		# update number of blocks read
+		numBlocks += 1
+		# close file
 		self.f.close()	
 		print("End: %d block(s) analyzed." % numBlocks)
 	
