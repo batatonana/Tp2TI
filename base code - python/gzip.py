@@ -180,14 +180,27 @@ class GZIP:
 			codes = functions.huffmanCode(lenghts)
 			print("Codes: ", codes)
 		#Creates a tree for the huffman codes
-			HCLEN_tree = HuffmanTree()
-			for i in codes.keys():HCLEN_tree.addNode(codes[i], i)
-		#Exercice 4: Reading HLit
+		HCLEN_tree = functions.creates_tree(codes)
+		#Exercice 4: Reading HLIT and storing lengths in a array
 		HLIT_lenghts = functions.search_tree_by_bit(self, HCLEN_tree, HLIT)
+		print("\nHLIT_lengths: ", HLIT_lenghts)
 		#Exercice 4: Creating the codes
-		print("\nHLIT_lenghts: ",functions.huffmanCode(HLIT_lenghts)) 
+		HLIT_codes = functions.huffmanCode(HLIT_lenghts)
+		print("HLIT_codes: ",HLIT_codes) 
 
-		
+		#Exercice 5 : Reading the tree HCLEN_tree and returning lenghts
+		HDIST_lenghts = functions.search_tree_by_bit(self, HCLEN_tree, HDIST)
+		print("\nHDIST_lenghts: ", HDIST_lenghts)
+		#Exercice 5 : Turning lengths into codes
+		HDIST_codes = functions.huffmanCode(HDIST_lenghts)
+		print("HDIST_codes: ", HDIST_codes)
+
+		#EXercice 6 a: Creating the trees for HLIT and HDIST
+		HLIT_tree = functions.creates_tree(HLIT_codes)
+		HDIST_tree = functions.creates_tree(HDIST_codes)
+		output = functions.decompress(self, HLIT_tree, HDIST_tree)
+
+		print("Ooutpub Buffer: ", output)
 		
 		
 		

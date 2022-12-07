@@ -1,3 +1,5 @@
+from huffmantree import HuffmanTree
+
 def huffmanCode(lenghts):
     #Slide 34 algorithm
     temp = {}
@@ -34,7 +36,6 @@ def huffmanCode(lenghts):
     codes =temp
 
     return codes
-
 
 #Fucntion for exercice 4: Getting Hlit_Lens
 def search_tree_by_bit(gzip, HCLEN_tree, HLIT):
@@ -82,3 +83,40 @@ def search_tree_by_bit(gzip, HCLEN_tree, HLIT):
                 n+=1
             HCLEN_tree.resetCurNode()
     return HLIT_lenghts
+
+def creates_tree(codes):
+    tree = HuffmanTree()
+    for i in codes.keys():tree.addNode(codes[i], i)
+    return tree
+
+def decompress(gzip, HLIT_tree, HDIST_tree):
+    output = []
+    pos = 0;
+    while pos != 256:
+        bit = gzip.readBits(1)
+        pos = HLIT_tree.nextNode(str(bit))
+        if(pos >= 0):
+            if(pos < 256):
+                output += [pos]
+            else:
+                size = [0,0]
+                if(256<pos<265):
+                    size[1] = pos-254
+                elif (pos == 285):
+                    size[1] = 258
+                else:
+                    toRead = ((pos-265)//4)+1
+                    aux = 0
+                    for i in range(toRead-1):
+                        if(toRead != i+1):
+                            aux += 2**(i+1)
+                    aux += (2**toRead)*((pos-265)%4)
+                    print("POS: ", pos)
+                    print("AUX: ", aux)
+                    size[1] = aux
+
+
+            print(pos)
+            HLIT_tree.resetCurNode()
+
+    return output
