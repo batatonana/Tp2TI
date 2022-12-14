@@ -1,3 +1,4 @@
+from huffmantree import HuffmanTree
 def huffmanCode(lenghts):
     codes = {}
     bl_count = {}
@@ -124,4 +125,3 @@ def decompress(gzip, HLIT_tree, HDIST_tree):
                 
             HLIT_tree.resetCurNode()
     return output
-
