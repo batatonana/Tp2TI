@@ -90,31 +90,43 @@ def decompress(gzip, HLIT_tree, HDIST_tree):
                 output += [pos]
             else:
                 size = [0,0]
-                if(256<pos<265):
+                if(255<pos<265):
                     size[0] = pos-254
                 elif (pos == 285):
                     size[0] = 258
                 else:
                     #Algoritm to calculate bits to read
                     toRead = ((pos-265)//4)+1
-                    aux = 0
-                    for i in range(toRead-1):
-                        if(toRead != i+1):
-                            aux += 2**(i+1)
-                    aux += (2**toRead)*((pos-264)%4) + 10
-                    
+                    aux = 11 # aux stating value if pos greater or equal to 265
+                    for i in range(1, toRead): # Algorithm to calculate the number of bits to read
+                        aux += (4 * (2 ** i))
+                    aux += ((pos-265)%4*(2**toRead))+gzip.readBits(toRead)
                     size[0] = aux
-
+                # dist = Backwards Distance
                 dist = -2
                 while dist < 0:
+                    # Reads the font and searches HDIST_tree
                     dist = HDIST_tree.nextNode(str(gzip.readBits(1)))
                 HDIST_tree.resetCurNode()
                 if (dist < 4):
                     size[1] = dist+1
                 else:
-                    for i in range(((dist-4)//2)+1):
-
+                    # Calculates the bits to read
+                    toRead = ((dist-4)//2)+1
+                    aux = 5 # aux stating value if dist greater or equal to 4
+                    for i in range(1, toRead): # algorithm to calculate
+                        aux += (2 * (2 ** i))
+                    aux += ((dist-4)%2)*(2**toRead) + gzip.readBits(toRead)
+                    size[1] = aux
+                # Reads the font dist backwards and length forward
+                start = len(output) - size[1]
+                for i in range(size[0]):
+                    output += [output[start+i]]
                 
             HLIT_tree.resetCurNode()
-
     return output
+
+def save_to_file(output):
+    f = open("Resultado.txt", "wb")
+    f.write(bytes(output))
+    f.close

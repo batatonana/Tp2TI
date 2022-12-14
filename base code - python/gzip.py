@@ -200,9 +200,10 @@ class GZIP:
 		HDIST_tree = functions.creates_tree(HDIST_codes)
 		#Exercice 7:
 		output = functions.decompress(self, HLIT_tree, HDIST_tree)
-
-		# print("Ooutpub Buffer: ", output)
+		print("Output Buffer: ", output)
 		
+		#Exercice 8:
+		functions.save_to_file(output)
 		
 		
 		
