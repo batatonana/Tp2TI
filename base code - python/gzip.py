@@ -174,33 +174,33 @@ class GZIP:
 				else:
 					lenghts[symbols[i]] = 0
 			lenghts = dict(sorted(lenghts.items()))
-			print("HCLEN_Lengths: ", lenghts)
+			#print("HCLEN_Lengths: ", lenghts)
 
 			#Generates de binary code for each symbol
 			codes = functions.huffmanCode(lenghts)
-			print("Codes: ", codes)
+			#print("Codes: ", codes)
 			#Creates a tree for the huffman codes
 			HCLEN_tree = functions.creates_tree(codes)
 			#Exercice 4: Reading HLIT and storing lengths in a array
 			HLIT_lenghts = functions.search_tree_by_bit(self, HCLEN_tree, HLIT)
-			print("\nHLIT_lengths: ", HLIT_lenghts)
+			#print("\nHLIT_lengths: ", HLIT_lenghts)
 			#Exercice 6: Creating the codes
 			HLIT_codes = functions.huffmanCode(HLIT_lenghts)
-			print("HLIT_codes: ",HLIT_codes) 
+			#print("HLIT_codes: ",HLIT_codes) 
 
 			#Exercice 5 : Reading the tree HCLEN_tree and returning lenghts
 			HDIST_lenghts = functions.search_tree_by_bit(self, HCLEN_tree, HDIST)
-			print("\nHDIST_lenghts: ", HDIST_lenghts)
+			#print("\nHDIST_lenghts: ", HDIST_lenghts)
 			#Exercice 6 : Turning lengths into codes
 			HDIST_codes = functions.huffmanCode(HDIST_lenghts)
-			print("HDIST_codes: ", HDIST_codes)
+			#print("HDIST_codes: ", HDIST_codes)
 
 			#Exercice 6 a: Creating the trees for HLIT and HDIST
 			HLIT_tree = functions.creates_tree(HLIT_codes)
 			HDIST_tree = functions.creates_tree(HDIST_codes)
 			#Exercice 7:
 			output = functions.decompress(self, HLIT_tree, HDIST_tree)
-			print("Output Buffer: ", output)
+			#print("Output Buffer: ", output)
 		
 			#Exercice 8:
 			f = open(self.gzh.fName, "wb")

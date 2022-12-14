@@ -36,24 +36,41 @@ def search_tree_by_bit(gzip, HCLEN_tree, HLIT):
         pos = HCLEN_tree.nextNode(str(bit))
         if(pos >= 0):
             if(pos == 16):
-                repeat = 3 + gzip.readBits(2)
+                repeat = 3
+                bit = 0
+                for i in range(2):
+                    bits = gzip.readBits(1)
+                    bits = bits << i
+                    bit = bit | bits
+                repeat += bit
                 for i in range(repeat):
                     HLIT_lenghts[n] = HLIT_lenghts[n-1]
                     n += 1
             elif(pos == 17):
-                repeat = 3 + gzip.readBits(3)
+                repeat = 3
+                bit = 0
+                for i in range(3):
+                    bits = gzip.readBits(1)
+                    bits = bits << i
+                    bit = bit | bits
+                repeat += bit
                 for i in range(repeat):
                     HLIT_lenghts[n] = 0
                     n+=1
             elif(pos == 18):
-                repeat = 11 + gzip.readBits(7)
+                repeat = 11
+                bit = 0
+                for i in range(7):
+                    bits = gzip.readBits(1)
+                    bits = bits << i
+                    bit = bit | bits
+                repeat += bit
                 for i in range(repeat):
                     HLIT_lenghts[n] = 0
                     n+=1
             else:
                 HLIT_lenghts[n] = pos
                 n+=1
-            print(pos, HLIT_lenghts[n-1])
             HCLEN_tree.resetCurNode()
     return HLIT_lenghts
 
