@@ -15,8 +15,7 @@ def huffmanCode(lenghts):
     for i in range(1, max(lenghts.values())+1):
         code = (code + bl_count[i-1]) << 1
         next_code[i] = code
-    print("next_code: ", next_code)
-    
+
     for i in bl_count.keys():
         if(bl_count[i] != 0):
             for j in lenghts.keys():
@@ -126,7 +125,3 @@ def decompress(gzip, HLIT_tree, HDIST_tree):
             HLIT_tree.resetCurNode()
     return output
 
-def save_to_file(output):
-    f = open("Resultado.txt", "wb")
-    f.write(bytes(output))
-    f.close
