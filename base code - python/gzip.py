@@ -160,7 +160,7 @@ class GZIP:
 		#Reads the block Hlit Hdist and Hclen
 			HLIT = self.readBits(5) + 257
 			HDIST = self.readBits(5) + 1
-			HCLEN = self.readBits(4) + 4
+			HCLEN = self.readBits(4) + 4	
 			print("HLIT: ", HLIT)
 			print("HDIST: ", HDIST)
 			print("HCLEN: ", HCLEN)
@@ -200,7 +200,7 @@ class GZIP:
 		HDIST_tree = functions.creates_tree(HDIST_codes)
 		output = functions.decompress(self, HLIT_tree, HDIST_tree)
 
-		print("Ooutpub Buffer: ", output)
+		# print("Ooutpub Buffer: ", output)
 		
 		
 		

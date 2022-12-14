@@ -8,6 +8,7 @@ def huffmanCode(lenghts):
     for i in range(max(lenghts.values())+1):
         bl_count[i] = 0
 
+    # Creates bl_cout and populates it
     for i in lenghts.keys():
 	    if(lenghts[i] != 0):
                 bl_count[lenghts[i]] += 1
@@ -18,7 +19,8 @@ def huffmanCode(lenghts):
     for i in range(1, max(lenghts.values())+1):
         code = (code + bl_count[i-1]) << 1
         next_code[i] = code
-    
+    print(next_code)
+
     for i in bl_count.keys():
         if(bl_count[i] != 0):
             for j in lenghts.keys():
@@ -101,22 +103,28 @@ def decompress(gzip, HLIT_tree, HDIST_tree):
             else:
                 size = [0,0]
                 if(256<pos<265):
-                    size[1] = pos-254
+                    size[0] = pos-254
                 elif (pos == 285):
-                    size[1] = 258
+                    size[0] = 258
                 else:
+                    #Algoritm to calculate bits to read
                     toRead = ((pos-265)//4)+1
                     aux = 0
                     for i in range(toRead-1):
                         if(toRead != i+1):
                             aux += 2**(i+1)
-                    aux += (2**toRead)*((pos-265)%4)
-                    print("POS: ", pos)
-                    print("AUX: ", aux)
-                    size[1] = aux
+                    aux += (2**toRead)*((pos-264)%4) + 10
+                    size[0] = aux
 
+                dist = -2
+                while dist < 0:
+                    dist = HDIST_tree.nextNode(str(gzip.readBits(1)))
+                HDIST_tree.resetCurNode()
+                if (dist < 5):
+                    size[1] = dist+1
+                elif():
 
-            print(pos)
+                print(size)
             HLIT_tree.resetCurNode()
 
     return output
